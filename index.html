@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <script src="js/jquery-2.2.4.min.js"></script>
+    <script src="js/openseadragon.min.js"></script>
+    <script src="js/openseadragon-annotations.js"></script>
+    <script src="js/openseadragon-filtering.js"></script>
+    <script src="js/caman.full.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://www.proteinatlas.org/common.css?v=v16.1.2">
+
+  </head>
+
+  <body>
+    <table class="border dark staticwidth">
+      <tbody>
+	<input id="fillStrategy" name="value" type="text" class="setting-input   " value="" hidden=true>
+        <tr>
+          <th class="nowrap">
+            <p>PROJECT</p>
+          </th>
+          <td style="border-top: 0;">OSD-MultiChannel Imaging Demo</td>
+        </tr>
+        <tr>
+          <th class="nowrap">
+            <p>Gallery Label</p>
+          </th>
+          <td style="border-top: 0;">DNA & RNA with Cells</td>
+        </tr>      
+	<tr>
+          <th class="nowrap">
+            <p>Layout</p>
+          </th>
+        <td style="border-top: 0;">
+	<input id="gridRows" type="number" name="value" min="1" max="48" value="4">
+    	<input type="radio" name="fillBy" value="rowsFirst" checked> Row(s)
+	<input type="radio" name="fillBy" value="columnsFirst" > Column(s)
+	</td>
+        </tr>	
+	<tr>
+          <th class="nowrap">
+            <p>Composite Overlay</p>
+          </th>
+        <td style="border-top: 0;">
+	<input id="getOverlay" name="value" type="checkbox"> Overlay using <input id="imgPerComposite" type="number" name="value" min="1" max="48" value="4"> images per composite
+	</td>
+        </tr>
+	<tr>
+          <th class="nowrap">
+            <p>Annotation</p>
+          </th>
+        <td style="border-top: 0;">
+	<input id="noAnno" name="subject" type="checkbox" value="true" />Don't display
+	</td>
+        </tr>
+	
+		<tr>
+		<th class="nowrap"> <p>RNA</p> </th>
+		<td style="border-top: 0;">
+		<input id="channel_RNA" value="RNA"  name="RNA" type="checkbox" checked>
+		<input type="color" id="colpick_RNA" name="value" value="#ff0000" onchange="changeFilter(jQuery.exposed.viewer,'color',this.value,jQuery(this).next())">
+		<input id="bright_RNA" type="range" name="value" min="-100" max="255" value="1" 		
+			onchange="changeFilter(jQuery.exposed.viewer,'brightness',this.value,jQuery(this).next())">
+		<span style="width:30px">1</span>
+		</td>
+		</tr>
+
+		<tr>
+		<th class="nowrap"> <p>AGP</p> </th>
+		<td style="border-top: 0;">
+		<input id="channel_AGP" value="AGP"  name="AGP" type="checkbox" checked>
+		<input type="color" id="colpick_AGP" name="value" value="#00ff00" onchange="changeFilter(jQuery.exposed.viewer,'color',this.value,jQuery(this).next())">
+		<input id="bright_AGP" type="range" name="value" min="-100" max="255" value="0" 		
+			onchange="changeFilter(jQuery.exposed.viewer,'brightness',this.value,jQuery(this).next())">
+		<span style="width:30px">0</span>
+		</td>
+		</tr>
+
+		<tr>
+		<th class="nowrap"> <p>MITO</p> </th>
+		<td style="border-top: 0;">
+		<input id="channel_MITO" value="MITO"  name="MITO" type="checkbox" checked>
+		<input type="color" id="colpick_MITO" name="value" value="#ffff00" onchange="changeFilter(jQuery.exposed.viewer,'color',this.value,jQuery(this).next())">
+		<input id="bright_MITO" type="range" name="value" min="-100" max="255" value="0" 		
+			onchange="changeFilter(jQuery.exposed.viewer,'brightness',this.value,jQuery(this).next())">
+		<span style="width:30px">0</span>
+		</td>
+		</tr>
+		<tr>
+		<th class="nowrap"> <p>DNA</p> </th>
+		<td style="border-top: 0;">
+		<input id="channel_DNA" value="DNA"  name="DNA" type="checkbox" checked>
+		<input type="color" id="colpick_DNA" name="value" value="#0000ff" onchange="changeFilter(jQuery.exposed.viewer,'color',this.value,jQuery(this).next())">
+		<input id="bright_DNA" type="range" name="value" min="-100" max="255" value="0" 		
+			onchange="changeFilter(jQuery.exposed.viewer,'brightness',this.value,jQuery(this).next())">
+		<span style="width:30px">0</span>
+		</td>
+		</tr>
+
+	<tr>
+          <th class="nowrap">
+            <p>Brightness (<a href="#" onclick="jQuery('#set_brightness').val(0); jQuery('#set_brightness').change(); return false">reset</a>)</p>
+          </th>
+        <td style="border-top: 0;">
+        <input id="set_brightness" type="range" min="-100" max="100" value="0" onchange="changeFilter(jQuery.exposed.viewer,'brightness',this.value,jQuery(this).next())"> <span>0</span>%
+	</td>
+        </tr>
+	<tr>
+          <th class="nowrap">
+            <p>Contrast(<a href="#" onclick="jQuery('#set_contrast').val(1); jQuery('#set_contrast').change(); return false">reset</a>)</p>
+          </th>
+        <td style="border-top: 0;">
+        <input id="set_contrast" type="range" min="0" max="5" value="1" onchange="changeFilter(jQuery.exposed.viewer,'contrast',this.value,jQuery(this).next())"> <span>1</span>%
+	</td>
+        </tr>
+      <tr>
+          <th class="nowrap">
+            <p>Click to retrieve</p>
+          </th>
+        <td style="border-top: 0;">
+	<input id="getView" name="subject" type="button" value="RETRIEVE" onclick="viewImageTiles(jQuery.exposed.viewer)" />
+	</td>
+        </tr> 
+      </tbody>
+    </table>
+    <div class="container" id="openseadragon1" style="width: 100%; height: 720px;"></div>
+    <div id="currentImage" class="imgInfo"> 
+    <!--images to view i2v -->
+    <input id="i2v" value="images/F0A_16_blue_dsRed.jpg,images/F0A_16_green_dsRed.jpg,images/F0A_16_red_cy5.jpg,images/F0A_16_uv_dapi.jpg,images/F0B_16_blue_dsRed.jpg,images/F0B_16_green_dsRed.jpg,images/F0B_16_red_cy5.jpg,images/F0B_16_uv_dapi.jpg,images/F0C_16_blue_dsRed.jpg,images/F0C_16_green_dsRed.jpg,images/F0C_16_red_cy5.jpg,images/F0C_16_uv_dapi.jpg"
+    hidden=true/>
+    <input id="i2vlabels" value="RNA@F0A_16,AGP@F0A_16,MITO@F0A_16,DNA@F0A_16,RNA@F0B_16,AGP@F0B_16,MITO@F0B_16,DNA@F0B_16,RNA@F0C_16,AGP@F0C_16,MITO@F0C_16,DNA@F0C_16" hidden=true/>
+</div>
+     <script src="js/imageGalleryAnnoDemo.js"></script>
+
+  </body>
+
+</html>
