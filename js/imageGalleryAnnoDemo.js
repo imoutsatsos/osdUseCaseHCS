@@ -13,7 +13,7 @@ jQuery.noConflict();
  jQuery(document).ready(function() {
    var viewer = OpenSeadragon({
      id: "openseadragon1",
-     prefixUrl: "/userContent/js/openseadragon-2.2.1/images/",
+     prefixUrl: "js/osdImages/",
      preserveViewport: true,
      crossOriginPolicy:"Anonymous",
      //toolbar: "toolbarDiv",
