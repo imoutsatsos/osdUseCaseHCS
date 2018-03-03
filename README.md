@@ -1,5 +1,5 @@
 # osdUseCaseHCS
-Example [OpenSeadragon](http://openseadragon.github.io/) for viewing High Content Screening multi-channel images. These are cellular images obtained using a digital microscope for medical research. Cells are stained with fluorescent dies that stain specific cellular structures and proteins, and then imaged at multiple wavelengths (channels) allowing the observation of a single die/structure/protein at a time. Comparisons between fields of views from different treatments and the ability to overlay the multiple-channels to a single composite are all central requirements that this example demonstrates
+Example [OpenSeadragon](http://openseadragon.github.io/) for viewing High Content Screening multi-channel images. These are cellular images obtained using a digital microscope for medical research. Cells are stained with fluorescent dies that stain specific cellular structures and proteins, and then imaged at multiple wavelengths (channels) allowing the observation of a single dye/structure/protein at a time. Comparisons between fields of views from different treatments and the ability to overlay the multiple-channels to a single composite are all central requirements that this example demonstrates
 ## Live Demo
 See a [live demo](https://imoutsatsos.github.io/osdUseCaseHCS/), but please make sure you read the instruction below.
 ## Installation
