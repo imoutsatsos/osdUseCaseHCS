@@ -16,7 +16,7 @@ jQuery.noConflict();
      prefixUrl: "js/osdImages/",
      preserveViewport: true,
      crossOriginPolicy:"Anonymous",
-     //toolbar: "toolbarDiv",
+     compositeOperation:'lighter',
      viewportMargins: {
        bottom: 120
      },
@@ -49,8 +49,7 @@ jQuery.noConflict();
        image.setOpacity(1);
        overlayDisplacement=1
        }else{
-       console.log ('Decreasing Opacity:'+1/((i%imgPerComposite)*2))
-       image.setOpacity(1/((i%imgPerComposite)*2));
+	image.setOpacity(1);
        overlayDisplacement=0
        console.log('Overlay Placement on:' + i)
        }
